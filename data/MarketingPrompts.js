@@ -24,9 +24,9 @@ export const MARKETING_ACTION_PROMPTS = {
 };
 
 export const COLOR_MAP = {
-  Star: '#28A745', // Green
-  CashCow: '#007BFF', // Blue
-  QuestionMark: '#FFC107', // Yellow
-  Dog: '#DC3545', // Red
-  Unknown: '#6C757D', // Gray
+  "Star": { fill: '#28A745' }, // Green
+  "Cash Cow": { fill: '#007BFF' }, // Blue
+  "Question Mark": { fill: '#FFC107' }, // Yellow
+  "Dog": { fill: '#DC3545' }, // Red
+  "Unknown": { fill: '#6C757D' }, // Gray
 };
