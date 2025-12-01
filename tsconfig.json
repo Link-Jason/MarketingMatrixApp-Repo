@@ -18,9 +18,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": [
-      "node"
-    ],
+    "types": [], // <--- THIS IS THE FIX: IT IS NOW AN EMPTY ARRAY
     "plugins": [
       {
         "name": "next"
