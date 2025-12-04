@@ -1,100 +1,98 @@
 import React from 'react';
-import { ChevronDoubleLeftIcon, DollarSign, TrendingUp, Zap, XCircle } from 'lucide-react';
+import { Zap, Target, TrendingUp, DollarSign } from 'lucide-react';
 import { MARKETING_ACTION_PROMPTS, COLOR_MAP } from '../data/MarketingPrompts';
 
-/**
- * OutputPanel Component
- * Displays detailed information and suggested actions for the selected item.
- */
-const OutputPanel = ({ selectedItem, onDeselect, onAction }) => {
-  if (!selectedItem) {
+const OutputPanel = ({ selectedItem }) => {
+    if (!selectedItem) {
+        return (
+            <div className="p-8 bg-white border border-gray-200 rounded-xl shadow-2xl text-center h-[350px] flex flex-col justify-center">
+                <Target className="w-12 h-12 text-indigo-400 mx-auto mb-4" />
+                <p className="font-extrabold text-2xl text-gray-700 mb-2">Portfolio Insights</p>
+                <p className="text-base text-gray-500">
+                    Select a product from the matrix or list to view a tailored marketing strategy.
+                </p>
+            </div>
+        );
+    }
+
+    const { name, classification, x, y, margin } = selectedItem;
+    const prompt = MARKETING_ACTION_PROMPTS[classification] || MARKETING_ACTION_PROMPTS.Unknown;
+    const colors = COLOR_MAP[classification] || COLOR_MAP.Unknown;
+
+    // FIX: Using Object Lookup (Dictionary) for cleaner icon/background logic
+    const { icon, bg } = {
+        Star: { icon: '⭐', bg: 'bg-green-600' },
+        'Cash Cow': { icon: '💰', bg: 'bg-blue-600' },
+        'Question Mark': { icon: '❓', bg: 'bg-yellow-600' }, 
+        Dog: { icon: '🐕', bg: 'bg-red-600' },
+    }[classification];
+
+
     return (
-      <div className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-xl shadow-inner h-full">
-        <XCircle className="w-12 h-12 text-gray-400 mb-4" />
-        <p className="text-lg font-medium text-gray-600">
-          Select a product bubble on the chart
-        </p>
-        <p className="text-sm text-gray-400">
-          to see its details and strategic actions.
-        </p>
-      </div>
+        <div className="bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden">
+            {/* The headerBg prop is now replaced by 'bg' */}
+            <div className={`p-4 ${bg} text-white`}>
+                <h3 className="text-lg font-semibold mb-1 opacity-90">Selected Product Strategy</h3>
+                <h2 className="text-3xl font-extrabold flex items-center">
+                    <span className="text-2xl mr-2">{icon}</span> {name}
+                </h2>
+            </div>
+
+            <div className="p-6">
+                <div
+                    className={`p-2 rounded-lg mb-6 text-center shadow-inner ${colors.bg} border-2 border-dashed ${
+                        colors.text.replace('text', 'border')
+                    }`}
+                >
+                    <p className={`font-bold text-lg ${colors.text} uppercase tracking-wider`}>
+                        {classification} Quadrant
+                    </p>
+                </div>
+
+                <div className="pt-2 border-t border-gray-100">
+                    <h4 className="font-bold text-xl text-indigo-700 mb-2 flex items-center">
+                        <Zap className="w-5 h-5 mr-2" /> Marketing Recommendation
+                    </h4>
+                    <p className="text-gray-900 tracking-tight text-2xl mb-4 leading-snug font-extrabold border-l-4 pl-3 border-indigo-200">
+                        {prompt.action}
+                    </p>
+
+                    <h4 className="font-bold text-lg text-gray-700 mb-2 flex items-center pt-4 border-t border-gray-100">
+                        <Target className="w-4 h-4 mr-2" /> Budget & Focus
+                    </h4>
+                    <p className="text-gray-600 text-base italic leading-relaxed pb-4">{prompt.reason}</p>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                    <h4 className="font-bold text-lg text-gray-700 mb-3">📊 Key Metrics</h4>
+                    <div className="space-y-2 text-base grid grid-cols-2 gap-4">
+                        
+                        {/* 1. Growth Trend (REPLACED LABEL) */}
+                        <p className="flex items-center">
+                            <TrendingUp className="w-4 h-4 mr-2 text-indigo-500" />
+                            <span className="font-semibold text-gray-600">Growth Trend:</span> {y.toFixed(1)}%
+                        </p>
+                        
+                        {/* 2. Sales Strength Index (REPLACED WITH SENTENCE + CONTEXT) */}
+                        <p className="flex items-center flex-wrap">
+                            <DollarSign className="w-4 h-4 mr-2 text-indigo-500 flex-shrink-0" />
+                            {/* The finalized structure for clarity on the 100% score */}
+                            <span className="mr-1">Sales Strength Index:</span>
+                            <span className="font-bold text-indigo-700">{x.toFixed(1)}%</span>
+                            <span className="ml-1 text-sm text-gray-500 italic">(scored against your top seller)</span>
+                        </p>
+                        
+                        {/* 3. Margin (No change) */}
+                        <p className="flex items-center">
+                            <span className="font-semibold text-gray-600">Margin:</span>{' '}
+                            {margin != null ? `${(margin * 100).toFixed(1)}%` : 'N/A'}
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
     );
-  }
-
-  const { id, name, classification, x, y, revenue } = selectedItem;
-  const colorData = COLOR_MAP[classification] || COLOR_MAP.Unknown;
-  const promptData = MARKETING_ACTION_PROMPTS[classification] || MARKETING_ACTION_PROMPTS.Unknown;
-
-  return (
-    <div className="bg-white p-6 rounded-xl shadow-2xl ring-1 ring-gray-200 h-full">
-      
-      {/* Header and Deselect Button */}
-      <div className="flex justify-between items-start mb-4 border-b pb-3">
-        <h3 className="text-2xl font-bold text-gray-800 flex-grow mr-4">
-          {name}
-        </h3>
-        <button
-          onClick={onDeselect}
-          className="flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
-        >
-          <ChevronDoubleLeftIcon className="w-4 h-4 mr-1" />
-          Deselect
-        </button>
-      </div>
-
-      {/* Classification Badge */}
-      <div className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold mb-6 shadow-md`}
-           style={{ backgroundColor: colorData.bg_quadrant, color: colorData.fill }}>
-        <Zap className="w-4 h-4 mr-1.5" />
-        {classification}
-      </div>
-
-      {/* Key Metrics Section */}
-      <div className="space-y-4 mb-8">
-        <h4 className="text-lg font-bold text-gray-700">Key Metrics</h4>
-        
-        {/* Metric 1: Sales Strength Index (REPLACED WITH NEW STRUCTURE) */}
-        <div className="flex flex-wrap items-baseline">
-          <DollarSign className="w-5 h-5 mr-2 text-indigo-500 flex-shrink-0" />
-          <p className="flex items-center text-gray-800">
-            {/* The finalized sentence structure for clarity on 100% score */}
-            <span className="mr-1">This product’s Sales Strength Index is</span>
-            <span className="font-bold text-indigo-700">{x.toFixed(1)}%</span>
-            <span className="ml-1 text-sm text-gray-500 italic">(Scored against your top seller)</span>
-          </p>
-        </div>
-
-        {/* Metric 2: Growth Trend (REPLACED LABEL) */}
-        <div className="flex items-center">
-          <TrendingUp className="w-5 h-5 mr-2 text-indigo-500" />
-          <span className="font-semibold text-gray-600">Growth Trend:</span>
-          <span className="ml-2">{y.toFixed(1)}%</span>
-        </div>
-        
-        {/* Metric 3: Total Revenue (No change) */}
-        <div className="flex items-center">
-          <DollarSign className="w-5 h-5 mr-2 text-green-600" />
-          <span className="font-semibold text-gray-600">Total Revenue:</span>
-          <span className="ml-2 font-bold">${revenue.toLocaleString()}</span>
-        </div>
-      </div>
-
-      {/* Strategic Recommendation Section */}
-      <div className="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500">
-        <h4 className="text-lg font-bold text-indigo-700 mb-2">
-          Recommended Strategy
-        </h4>
-        <p className="text-gray-700 mb-3">{promptData.action}</p>
-        <button
-          onClick={() => onAction(id)}
-          className="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-md"
-        >
-          Learn More About "{promptData.action}"
-        </button>
-      </div>
-
-    </div>
-  );
 };
 
 export default OutputPanel;
