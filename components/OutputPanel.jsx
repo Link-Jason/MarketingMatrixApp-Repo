@@ -65,7 +65,7 @@ const OutputPanel = ({ selectedItem }) => {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                    {/* NEW: Added Icon and styling to Key Metrics heading */}
+                    {/* NEW: Added BarChart3 Icon for alignment and consistency */}
                     <h4 className="font-bold text-lg text-gray-700 mb-3 flex items-center">
                         <BarChart3 className="w-5 h-5 mr-2 text-indigo-700" /> Key Metrics
                     </h4>
@@ -90,8 +90,9 @@ const OutputPanel = ({ selectedItem }) => {
                             <span className="ml-1 text-sm text-gray-500 italic">(Scored against your top seller)</span>
                         </p>
                         
-                        {/* 3. Profitability (NEW LABEL and BOLD DARK VALUE) */}
+                        {/* 3. Profitability (NEW LABEL and BOLD DARK VALUE + Icon for alignment) */}
                         <p className="flex items-center">
+                            <DollarSign className="w-4 h-4 mr-2 text-green-600" />
                             <span className="font-semibold text-gray-600">Profitability:</span>{' '}
                             {margin != null ? 
                                 <span className="font-bold text-gray-900">{`${(margin * 100).toFixed(1)}%`}</span> 
