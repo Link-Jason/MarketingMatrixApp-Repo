@@ -17,6 +17,9 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
   const maxRevenue = Math.max(...items.map((i) => i.revenue), 1);
   const verticalLabelX = SIZE - AXIS_LABEL_SPACE + 20;
 
+  // CHART SCALING FIX: Calculate the maximum 'x' score (max share) to set the correct domain max
+  const maxShare = Math.max(...items.map((i) => i.x), 1); 
+
   return (
     <div className="bg-white p-8 rounded-xl shadow-2xl ring-1 ring-gray-200">
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 tracking-tight">
@@ -85,9 +88,12 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
             strokeDasharray="4 4"
           />
 
+          {/* Plotting the items */}
           {items.map((item) => {
-            const x = PLOT_START + (item.x / 100) * PLOT_SIZE;
-            const y = PLOT_START + PLOT_SIZE - (item.y / 100) * PLOT_SIZE;
+            // SCALING FIX: Use maxShare for correct X-axis scaling
+            const x = PLOT_START + (item.x / maxShare) * PLOT_SIZE; 
+            const y = PLOT_START + PLOT_SIZE - (item.y / 100) * PLOT_SIZE; // Y-axis max is still 100
+
             const r = Math.max(
               8,
               Math.sqrt(item.revenue / maxRevenue) * MAX_R_SCALING * 1.2,
@@ -110,9 +116,9 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
                   onClick={() => onSelect(item)}
                 >
                   <title>
-                    {`${item.name} (${item.classification})\nShare: ${item.x.toFixed(
+                    {`${item.name} (${item.classification})\nRevenue Generation: ${item.x.toFixed(
                       1,
-                    )}%\nGrowth: ${item.y.toFixed(1)}%\nRevenue: $${item.revenue.toLocaleString()}\nAction: ${
+                    )}%\nGrowth Trend: ${item.y.toFixed(1)}%\nRevenue: $${item.revenue.toLocaleString()}\nAction: ${
                       prompt.action
                     }`}
                   </title>
@@ -131,14 +137,15 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
               </g>
             );
           })}
-
+          
+          {/* QUADRANT LABELS (SIMPLIFIED) */}
           <text
             x={MATRIX_START + (HALF_MATRIX_SIZE * 0.5)}
             y={MATRIX_START - 15}
             textAnchor="middle"
             className="text-[14px] font-bold fill-gray-600"
           >
-            ← LOW SHARE
+            ← LOW REVENUE
           </text>
           <text
             x={MATRIX_START + (HALF_MATRIX_SIZE * 1.5)}
@@ -146,7 +153,7 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
             textAnchor="middle"
             className="text-[14px] font-bold fill-gray-600"
           >
-            HIGH SHARE →
+            HIGH REVENUE →
           </text>
           <text
             x={verticalLabelX}
@@ -170,13 +177,15 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
           >
             ← LOW GROWTH
           </text>
+
+          {/* AXIS TITLES (SIMPLIFIED) */}
           <text
             x={SIZE / 2}
             y={SIZE - 10}
             textAnchor="middle"
             className="text-[16px] font-bold fill-gray-800"
           >
-            Relative Market Share (Market Share %)
+            Revenue Generation
           </text>
           <text
             x={AXIS_LABEL_SPACE / 2}
@@ -185,7 +194,7 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
             transform={`rotate(-90 ${AXIS_LABEL_SPACE / 2} ${SIZE / 2})`}
             className="text-[16px] font-bold fill-gray-800"
           >
-            Market Growth Rate (Category Growth %)
+            Growth Trend
           </text>
         </svg>
       </div>
