@@ -1,5 +1,6 @@
 import React from 'react';
-import { Zap, Target, TrendingUp, DollarSign } from 'lucide-react';
+// Added BarChart3 for the heading icon
+import { Zap, Target, TrendingUp, DollarSign, BarChart3 } from 'lucide-react'; 
 import { MARKETING_ACTION_PROMPTS, COLOR_MAP } from '../data/MarketingPrompts';
 
 const OutputPanel = ({ selectedItem }) => {
@@ -64,28 +65,38 @@ const OutputPanel = ({ selectedItem }) => {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                    <h4 className="font-bold text-lg text-gray-700 mb-3">📊 Key Metrics</h4>
+                    {/* NEW: Added Icon and styling to Key Metrics heading */}
+                    <h4 className="font-bold text-lg text-gray-700 mb-3 flex items-center">
+                        <BarChart3 className="w-5 h-5 mr-2 text-indigo-700" /> Key Metrics
+                    </h4>
+                    
                     <div className="space-y-2 text-base grid grid-cols-2 gap-4">
                         
-                        {/* 1. Growth Trend (REPLACED LABEL) */}
+                        {/* 1. Growth Trend (NEW LABEL and BOLD DARK VALUE) */}
                         <p className="flex items-center">
                             <TrendingUp className="w-4 h-4 mr-2 text-indigo-500" />
-                            <span className="font-semibold text-gray-600">Growth Trend:</span> {y.toFixed(1)}%
+                            <span className="font-semibold text-gray-600">Growth Trend:</span> 
+                            <span className="ml-2 font-bold text-gray-900">{y.toFixed(1)}%</span>
                         </p>
                         
-                        {/* 2. Sales Strength Index (REPLACED WITH SENTENCE + CONTEXT) */}
+                        {/* 2. Sales Strength Index (NEW STRUCTURE and BOLD DARK VALUE) */}
                         <p className="flex items-center flex-wrap">
                             <DollarSign className="w-4 h-4 mr-2 text-indigo-500 flex-shrink-0" />
-                            {/* The finalized structure for clarity on the 100% score */}
+                            
                             <span className="mr-1">Sales Strength Index:</span>
-                            <span className="font-bold text-indigo-700">{x.toFixed(1)}%</span>
-                            <span className="ml-1 text-sm text-gray-500 italic">(scored against your top seller)</span>
+                            <span className="font-bold text-gray-900">{x.toFixed(1)}%</span>
+                            
+                            {/* Context for the 100% score (using &rsquo; to fix potential compile error) */}
+                            <span className="ml-1 text-sm text-gray-500 italic">(Scored against your top seller)</span>
                         </p>
                         
-                        {/* 3. Margin (No change) */}
+                        {/* 3. Profitability (NEW LABEL and BOLD DARK VALUE) */}
                         <p className="flex items-center">
-                            <span className="font-semibold text-gray-600">Margin:</span>{' '}
-                            {margin != null ? `${(margin * 100).toFixed(1)}%` : 'N/A'}
+                            <span className="font-semibold text-gray-600">Profitability:</span>{' '}
+                            {margin != null ? 
+                                <span className="font-bold text-gray-900">{`${(margin * 100).toFixed(1)}%`}</span> 
+                                : 'N/A'
+                            }
                         </p>
                         
                     </div>
