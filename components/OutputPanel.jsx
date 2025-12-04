@@ -65,35 +65,43 @@ const OutputPanel = ({ selectedItem }) => {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                    {/* NEW: Added BarChart3 Icon for alignment and consistency */}
-                    <h4 className="font-bold text-lg text-gray-700 mb-3 flex items-center">
+                    {/* Heading with the BarChart3 icon */}
+                    <h4 className="font-bold text-lg text-gray-700 mb-4 flex items-center">
                         <BarChart3 className="w-5 h-5 mr-2 text-indigo-700" /> Key Metrics
                     </h4>
                     
-                    <div className="space-y-2 text-base grid grid-cols-2 gap-4">
+                    {/* NEW: Single-Column Layout using flex-col for perfect alignment */}
+                    <div className="flex flex-col space-y-3">
                         
-                        {/* 1. Growth Trend (NEW LABEL and BOLD DARK VALUE) */}
-                        <p className="flex items-center">
-                            <TrendingUp className="w-4 h-4 mr-2 text-indigo-500" />
-                            <span className="font-semibold text-gray-600">Growth Trend:</span> 
-                            <span className="ml-2 font-bold text-gray-900">{y.toFixed(1)}%</span>
+                        {/* 1. Growth Trend: Aligned Left/Right (Icon and Bold Value) */}
+                        <p className="flex justify-between items-start pb-1 border-b border-gray-100">
+                            <span className="flex items-center font-semibold text-gray-600">
+                                <TrendingUp className="w-4 h-4 mr-2 text-indigo-500" />
+                                Growth Trend:
+                            </span> 
+                            <span className="font-bold text-gray-900">{y.toFixed(1)}%</span>
                         </p>
                         
-                        {/* 2. Sales Strength Index (NEW STRUCTURE and BOLD DARK VALUE) */}
-                        <p className="flex items-center flex-wrap">
-                            <DollarSign className="w-4 h-4 mr-2 text-indigo-500 flex-shrink-0" />
+                        {/* 2. Sales Strength Index: Aligned Left/Right, Context nested under label */}
+                        <p className="flex justify-between items-start pb-1 border-b border-gray-100">
+                            <span className="flex flex-col">
+                                <span className="flex items-center font-semibold text-gray-600 mb-1">
+                                    <DollarSign className="w-4 h-4 mr-2 text-indigo-500" />
+                                    Sales Strength Index:
+                                </span>
+                                {/* Context for the 100% score (aligned beneath the label) */}
+                                <span className="ml-6 text-sm text-gray-500 italic">(Scored against your top seller)</span>
+                            </span>
                             
-                            <span className="mr-1">Sales Strength Index:</span>
                             <span className="font-bold text-gray-900">{x.toFixed(1)}%</span>
-                            
-                            {/* Context for the 100% score (using &rsquo; to fix potential compile error) */}
-                            <span className="ml-1 text-sm text-gray-500 italic">(Scored against your top seller)</span>
                         </p>
                         
-                        {/* 3. Profitability (NEW LABEL and BOLD DARK VALUE + Icon for alignment) */}
-                        <p className="flex items-center">
-                            <DollarSign className="w-4 h-4 mr-2 text-green-600" />
-                            <span className="font-semibold text-gray-600">Profitability:</span>{' '}
+                        {/* 3. Profitability: Aligned Left/Right (Icon and Bold Value) */}
+                        <p className="flex justify-between items-start">
+                            <span className="flex items-center font-semibold text-gray-600">
+                                <DollarSign className="w-4 h-4 mr-2 text-green-600" />
+                                Profitability:
+                            </span>
                             {margin != null ? 
                                 <span className="font-bold text-gray-900">{`${(margin * 100).toFixed(1)}%`}</span> 
                                 : 'N/A'
