@@ -28,12 +28,12 @@ const MenuItemList = ({ items, onSelect, selectedId }) => {
                             key={item.id}
                             onClick={() => onSelect(item)}
                             className={`p-3 border-l-4 rounded-lg cursor-pointer transition-all duration-200
-                                ${colors.border}
-                                ${
-                                    isSelected
-                                        ? `${colors.bg} ring-2 ring-offset-2 ring-indigo-500 shadow-md`
-                                        : 'bg-white hover:bg-gray-50 shadow-sm hover:shadow-lg'
-                                }`}
+                              ${colors.border}
+                              ${
+                                isSelected
+                                  ? 'bg-indigo-50 shadow-md ring-1 ring-indigo-500'
+                                  : 'bg-white hover:bg-gray-50 shadow-sm hover:shadow-lg'
+                              }`}
                         >
                             <p className="font-semibold text-gray-900 flex justify-between items-center">
                                 <span>{item.name}</span>
