@@ -116,7 +116,7 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
                   onClick={() => onSelect(item)}
                 >
                   <title>
-                    {`${item.name} (${item.classification})\nRevenue Generation: ${item.x.toFixed(
+                    {`${item.name} (${item.classification})\nSales Strength Index: ${item.x.toFixed(
                       1,
                     )}%\nGrowth Trend: ${item.y.toFixed(1)}%\nRevenue: $${item.revenue.toLocaleString()}\nAction: ${
                       prompt.action
