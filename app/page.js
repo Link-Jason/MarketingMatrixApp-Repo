@@ -63,10 +63,10 @@ export default function Page() {
         <main className="min-h-screen bg-gray-100 p-4 sm:p-8 font-inter">
             <header className="text-center mb-10 max-w-4xl mx-auto">
                 <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-2 tracking-tight">
-                    BCG Product Portfolio Dashboard
+                BCG Matrix for Marketers
                 </h1>
                 <p className="text-lg text-gray-600">
-                    Analyze product performance and derive strategic marketing actions using the Growth-Share Matrix.
+                Clear performance trends to prioritize which products get the most marketing attention and funding.
                 </p>
             </header>
 

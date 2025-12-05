@@ -100,7 +100,7 @@ const OutputPanel = ({ selectedItem }) => {
                         <p className="flex justify-between items-start">
                             <span className="flex items-center font-semibold text-gray-600">
                                 <DollarSign className="w-4 h-4 mr-2 text-green-600" />
-                                Profitability:
+                                Margin:
                             </span>
                             {margin != null ? 
                                 <span className="font-bold text-gray-900">{`${(margin * 100).toFixed(1)}%`}</span> 

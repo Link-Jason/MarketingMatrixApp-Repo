@@ -23,7 +23,7 @@ const MatrixChart = ({ items, onSelect, selectedId }) => {
   return (
     <div className="bg-white p-8 rounded-xl shadow-2xl ring-1 ring-gray-200">
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 tracking-tight">
-        BCG Growth–Share Matrix
+      Product Performance Matrix
       </h2>
 
       <div className="w-full flex justify-center">
